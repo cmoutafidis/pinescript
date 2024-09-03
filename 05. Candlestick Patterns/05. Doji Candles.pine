@@ -1,0 +1,28 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Dojis", overlay = true)
+
+maxWickSize = input.float(title="Max Wick Size", defval = 2.0)
+maxBodySize = input.float(title="Max Body Size Percentage", defval = 0.25)
+
+// Get candle data
+topWickSize    = high - (close > open ? close : open)
+bottomWickSize = (close > open ? open : close) - low
+bodyPercent    = math.abs(close - open) / (high - low)
+
+// Get our filters
+swingHigh = high == ta.highest(high, 10)
+swingLow = low == ta.lowest(low, 10)
+
+// Determine if current bar is a valid doji candle
+doji = topWickSize <= bottomWickSize * maxWickSize and
+         bottomWickSize <= topWickSize * maxWickSize and
+         bodyPercent <= maxBodySize
+
+dojiBull = doji and swingLow
+dojiBear = doji and swingHigh
+
+plotshape(dojiBull, style = shape.triangleup,   size = size.small, color = color.green)
+plotshape(dojiBear, style = shape.triangledown, size = size.small, color = color.red)

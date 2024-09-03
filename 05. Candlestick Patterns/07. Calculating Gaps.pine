@@ -1,0 +1,10 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Gaps", precision = 5)
+
+gapClose = math.abs((open - close[1]) / open)
+gapDistance = low > high[1] ? ((low - high[1]) / low) * 100 : ((high - low[1]) / high) * 100
+
+plot(gapDistance)

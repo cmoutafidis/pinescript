@@ -1,0 +1,11 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Higher close and lower close", overlay = true)
+
+hc = close > high[1]
+lc = close < low[1]
+
+plotshape(hc, style = shape.arrowup  , location = location.belowbar, color = color.green)
+plotshape(lc, style = shape.arrowdown, location = location.abovebar, color = color.red)

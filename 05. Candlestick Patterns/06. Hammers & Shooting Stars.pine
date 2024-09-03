@@ -1,0 +1,28 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Hammers & Shooting Stars")
+
+// User input
+fibLevel = input.float(defval = 0.333)
+colorFilter = input.bool(defval = true)
+atrFilter = input.float(defval = 0.1)
+
+// Check ATR Filter
+atr = ta.atr(14)
+candleSize = high - low
+atrFilterCheck = candleSize >= atr * atrFilter
+
+fibBull = (low - high) * fibLevel + high
+fibBear = (high - low) * fibLevel + low
+
+highestBody = close < open ? open : close
+lowestBody  = close < open ? close : open
+
+// Determine if we have a hammer or shooting star candle
+hammerCandle = lowestBody >= fibBull and (not colorFilter or close > open) and atrFilterCheck
+starCandle   = highestBody <= fibBear and (not colorFilter or close < open) and atrFilterCheck
+
+plotshape(hammerCandle, style = shape.triangleup, color = color.green, location = location.belowbar)
+plotshape(starCandle, style = shape.triangledown, color = color.red, location = location.abovebar)

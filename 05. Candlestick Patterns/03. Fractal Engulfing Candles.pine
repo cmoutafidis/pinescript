@@ -1,0 +1,18 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Fractal enculfing Caldles", overlay = true)
+
+swingHigh = high == ta.highest(high, 10) or high[1] == ta.highest(high, 10)
+swingLow = low == ta.lowest(low, 10) or low[1] == ta.lowest(low, 10)
+
+//ema = ta.ema(close, 50)
+rsi = ta.rsi(close, 14)
+
+// previus bar is bearish, the current bar opened lower than prev close, current bar closed higher than prev open, and swing low/high
+bullEc = close[1] < open[1] and open <= close[1] and close >= open[1] and swingLow and rsi < 30 // or close > ema
+bearEc = close[1] > open[1] and open >= close[1] and close <= open[1] and swingHigh and rsi > 70 // or close < ema
+
+plotshape(bullEc, style = shape.triangleup, location = location.belowbar, color = color.green, size = size.small)
+plotshape(bearEc, style = shape.triangledown, location = location.abovebar, color = color.red, size = size.small)

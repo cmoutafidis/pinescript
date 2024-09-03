@@ -1,0 +1,12 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Basic enculfing Caldles", overlay = true)
+
+// previus bar is bearish, the current bar opened lower than prev close, current bar closed higher than prev open
+bullEc = close[1] < open[1] and open <= close[1] and close >= open[1]
+bearEc = close[1] > open[1] and open >= close[1] and close <= open[1]
+
+plotshape(bullEc, style = shape.triangleup, location = location.belowbar, color = color.green, size = size.small)
+plotshape(bearEc, style = shape.triangledown, location = location.abovebar, color = color.red, size = size.small)

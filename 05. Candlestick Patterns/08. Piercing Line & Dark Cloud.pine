@@ -1,0 +1,20 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Piercing Line & Dark Cloud", overlay = true)
+
+// Calculate 50% mark of previous bar
+piercingLine = (low[1] - high[1]) * 0.5 + high[1]
+plot(piercingLine)
+
+// Analyze filters
+rsi = ta.rsi(close, 7)
+bullishFilter = rsi < 30 or rsi[1] < 30
+bearishFilter = rsi > 70 or rsi[1] > 70
+
+bpc = close[1] < open[1] and open < close[1] and close >= piercingLine and close < high[1] and close > open and bullishFilter
+dcc = close[1] > open[1] and open > close[1] and close <= piercingLine and close > low[1] and open > close and bearishFilter
+
+plotshape(bpc, style = shape.triangleup, color = color.green, location = location.belowbar)
+plotshape(dcc, style = shape.triangledown, color = color.red, location = location.abovebar)

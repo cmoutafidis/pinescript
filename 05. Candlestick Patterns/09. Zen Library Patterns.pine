@@ -1,0 +1,21 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Zen Library Patterns")
+
+// Import Zen Library
+import ZenAndTheArtOfTrading/ZenLibrary/8 as zen
+
+// Detect Patterns
+bullishEc = zen.isBullishEC(1, 2, true) and low == ta.lowest(low, 10)
+bearishEc = zen.isBearishEC(1, 2, true) and high == ta.highest(high, 10)
+hammer    = zen.isHammer(0.25, true)
+star      = zen.isStar(0.25, true)
+doji      = zen.isDoji(2)
+
+plotshape(bullishEc, style = shape.triangleup, color = color.green, location = location.belowbar)
+plotshape(bearishEc, style = shape.triangledown, color = color.red, location = location.abovebar)
+plotshape(hammer, style = shape.triangleup, color = color.green, location = location.belowbar)
+plotshape(star, style = shape.triangledown, color = color.red, location = location.abovebar)
+plotshape(doji, style = shape.triangledown, location = location.abovebar)
