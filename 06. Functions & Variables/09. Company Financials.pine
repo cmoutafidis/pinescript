@@ -1,0 +1,9 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Hello world")
+
+f = request.financial(syminfo.tickerid, "ACCOUNTS_PAYABLE", "FQ", gaps = barmerge.gaps_on, ignore_invalid_symbol = true, currency = currency.CHF)
+
+plot(f)

@@ -1,0 +1,48 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Fractal enculfing Caldles", overlay = true)
+
+// Constants
+var ATR_GROUP = "ATR Filter"
+var EMA_GROUP = "EMA Filter"
+var HIGH_LOW_GROUP = "High/Low Filter"  
+
+// Get user input
+maxAtrSize = input.float(title = "Max Candle Size", defval = 1.0, tooltip = "The script devides the candle size by ATR and compares it to this", group = ATR_GROUP)
+useAtrFilter = input.bool(title = "Use ATR Filter?", defval = false, tooltip = "Turns on/off the ATR filter", group = ATR_GROUP)
+
+emaLength = input.int(title = "EMA Length", defval = 50, tooltip = "Length of the EMA Filter", group = EMA_GROUP)
+useEmaFilter = input.bool(title = "Use EMA Filter?", defval = false, tooltip = "Turns on/off the EMA filter", group = EMA_GROUP)
+
+lookback = input.int(title = "Swing High/Low lookback", defval = 10, tooltip = "How many bars to look back for swing high/low", group = HIGH_LOW_GROUP)
+useHighLowFilter = input.bool(title = "Use Swing High/Low Filter?", defval = false, tooltip = "Turns on/off the swing high/low filter", group = HIGH_LOW_GROUP)
+
+// Get ATR Filter
+atr = ta.atr(14)
+candleSize = high - low
+atrFilter = not useAtrFilter or candleSize / atr < maxAtrSize
+
+// Gets swing high/low filter
+swingHighFilter = not useHighLowFilter or (high == ta.highest(high, lookback) or high[1] == ta.highest(high, lookback))
+swingLowFilter  = not useHighLowFilter or (low == ta.lowest(low, lookback) or low[1] == ta.lowest(low, lookback))
+
+// Get EMA Filter
+ema = ta.ema(close, emaLength)
+emaFilterLong = not useEmaFilter or close > ema
+emaFilterShort = not useEmaFilter or close < ema
+
+// Detect candlestick pattern
+bullEc = close[1] < open[1] and open <= close[1] and close >= open[1] and swingLowFilter and atrFilter and emaFilterLong
+bearEc = close[1] > open[1] and open >= close[1] and close <= open[1] and swingHighFilter and atrFilter and emaFilterShort
+
+
+// Draw signals and data
+plotshape(bullEc, style = shape.triangleup, location = location.belowbar, color = color.green, size = size.small)
+plotshape(bearEc, style = shape.triangledown, location = location.abovebar, color = color.red, size = size.small)
+plot(useEmaFilter ? ema : na, color = emaFilterLong ? color.green : color.red, title = "EMA")
+
+// Generate alerts
+alertcondition(condition = bullEc, title = "Bullish EC ", message = "Bullish engulfing candle detected on {{ticket}}")
+alertcondition(condition = bearEc, title = "Bearish EC ", message = "Bearish engulfing candle detected on {{ticket}}")

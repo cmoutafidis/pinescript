@@ -1,0 +1,19 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Technical Analysis Namespace")
+
+rsi = ta.rsi(close, 14)
+stoch = ta.stoch(close, high, low, 14)
+ma = ta.ema(close, 50)
+atr = ta.atr(14)
+[macd, signalLine, histLine] = ta.macd(close, 12, 26, 9)
+
+// plot(rsi)
+// plot(stoch, color = color.red)
+// plot(ma, color = color.orange, force_overlay = true)
+// plot(atr, color = color.new(color.green, 100), force_overlay = true)
+plot(macd)
+plot(signalLine, color = color.orange)
+plot(histLine, color = histLine > 0 ? color.green : color.red, style = plot.style_histogram)

@@ -1,0 +1,14 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Hello world")
+
+if barstate.islast
+    label.new(bar_index, high, text = "Close: " + str.tostring(close), force_overlay = true)
+    label.new(bar_index - 2, high[2], text = str.format("{0,number,#.#}", close), force_overlay = true)
+
+plot(str.length("12345"))
+plot(str.tonumber("10"))
+
+plot(na)

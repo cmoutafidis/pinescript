@@ -1,0 +1,25 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Hello world", overlay = true)
+
+highestHigh = ta.highest(high, 50)
+breakout = close > highestHigh[1]
+
+plot(highestHigh)
+
+bgcolor(breakout ? color.green : na)
+
+lowest = ta.lowest(low, 50)
+lowestBreakout = low == lowest
+
+plot(lowest, color = color.red)
+
+bgcolor(lowestBreakout ? color.red : na)
+
+// lowestLowBarCount = ta.lowestbars(50)
+lowestLowBarCount = ta.barssince(low == ta.lowest(50))
+lowestLowVolume = volume[math.abs(lowestLowBarCount)]
+
+plot(lowestLowVolume)

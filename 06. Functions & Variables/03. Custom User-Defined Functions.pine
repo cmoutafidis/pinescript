@@ -1,0 +1,29 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Hello world")
+
+// 1 line custom function
+addition(x, y) => x + y
+
+plot(addition(23, 33))
+
+multiplier = 2
+multi(x, y) =>
+    value = x * y
+    value * multiplier
+
+plot(multi(5, 6), color= color.red)
+
+
+multi_result(x, y) =>
+    a = x + y
+    b = x - y
+
+    [a, b]
+
+[result_a, result_b] = multi_result(10, 5)
+
+plot(result_a, color = color.orange)
+plot(result_b, color = color.purple)

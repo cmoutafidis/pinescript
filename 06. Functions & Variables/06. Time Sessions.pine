@@ -1,0 +1,11 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Hello world", overlay = true)
+
+session = input.session(title = "Time Session to Highlught", defval = "0900-1900")
+
+isInSession(_session) => not na(time(timeframe.period, _session))
+
+bgcolor(isInSession(session) ? color.new(color.red, 75) : na)
