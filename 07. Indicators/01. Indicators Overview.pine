@@ -1,0 +1,10 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Indicators")
+
+// ta.* contains the indicators
+ema = ta.ema(close, 14)
+
+plot(ema)

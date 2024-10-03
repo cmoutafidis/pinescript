@@ -1,5 +1,5 @@
 //@version=5
-indicator("Triangle", "", true)
+indicator("Documentation Indicator", "", true)
 
 //#region ———————————————————— Constants and inputs
 

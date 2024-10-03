@@ -1,0 +1,17 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Hello world")
+
+var barCounter = 0
+varip tickCounter = 0
+tickCounterSimple = 0
+
+barCounter += 1
+tickCounter += 1
+tickCounterSimple += 1
+
+plot(barCounter)
+plot(tickCounter, color = color.purple)
+plot(tickCounterSimple, color = color.orange)

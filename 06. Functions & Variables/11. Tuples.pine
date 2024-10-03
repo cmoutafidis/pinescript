@@ -1,0 +1,22 @@
+// This Pine Script™ code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © cmoutafidis
+
+//@version=5
+indicator(title="Tuples")
+
+// Generate tuples
+tuplesFunction() =>
+    a = 1
+    b = 2
+    c = 3
+    [a, b, c]
+
+// Access tuples
+[var1, var2, var3] = tuplesFunction()
+plot(var1)
+
+[macd, signalLine, histLine] = ta.macd(close, 12, 26, 9)
+
+plot(macd)
+plot(signalLine)
+plot(histLine)
